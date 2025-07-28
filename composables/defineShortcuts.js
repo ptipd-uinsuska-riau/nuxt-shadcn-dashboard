@@ -1,55 +1,23 @@
-import type { ComputedRef, WatchSource } from 'vue'
 import { useDebounceFn, useEventListener } from '@vueuse/core'
 import { logicAnd, logicNot } from '@vueuse/math'
 import { computed, ref } from 'vue'
 import { useShortcuts } from './useShortcuts'
 
-export interface ShortcutConfig {
-  // eslint-disable-next-line ts/no-unsafe-function-type
-  handler: Function
-  usingInput?: string | boolean
-  whenever?: WatchSource<boolean>[]
-}
-
-export interface ShortcutsConfig {
-  // eslint-disable-next-line ts/no-unsafe-function-type
-  [key: string]: ShortcutConfig | Function
-}
-
-export interface ShortcutsOptions {
-  chainDelay?: number
-}
-
-interface Shortcut {
-  // eslint-disable-next-line ts/no-unsafe-function-type
-  handler: Function
-  condition: ComputedRef<boolean>
-  chained: boolean
-  // KeyboardEvent attributes
-  key: string
-  ctrlKey: boolean
-  metaKey: boolean
-  shiftKey: boolean
-  altKey: boolean
-  // code?: string
-  // keyCode?: number
-}
-
 const chainedShortcutRegex = /^[^-]+(?:-[^-]+)*-.*(?:[\n\r\u2028\u2029][^-]*|[^-\n\r\u2028\u2029])$/
 const combinedShortcutRegex = /^[^_]+(?:_[^_]+)*_.*(?:[\n\r\u2028\u2029][^_]*|[^\n\r_\u2028\u2029])$/
 
-export function defineShortcuts(config: ShortcutsConfig, options: ShortcutsOptions = {}) {
+export function defineShortcuts(config, options = {}) {
   const { macOS, usingInput } = useShortcuts()
 
-  let shortcuts: Shortcut[] = []
+  let shortcuts = []
 
-  const chainedInputs = ref<string[]>([])
+  const chainedInputs = ref([])
   const clearChainedInput = () => {
     chainedInputs.value.splice(0, chainedInputs.value.length)
   }
   const debouncedClearChainedInput = useDebounceFn(clearChainedInput, options.chainDelay ?? 800)
 
-  const onKeyDown = (e: KeyboardEvent) => {
+  const onKeyDown = (e) => {
     // Input autocomplete triggers a keydown event
     if (!e.key) { return }
 
@@ -102,7 +70,7 @@ export function defineShortcuts(config: ShortcutsConfig, options: ShortcutsOptio
     }
 
     // Parse key and modifiers
-    let shortcut: Partial<Shortcut>
+    let shortcut = {}
 
     if (key.includes('-') && key !== '-' && !key.match(chainedShortcutRegex)?.length) {
       // eslint-disable-next-line no-console
@@ -157,17 +125,17 @@ export function defineShortcuts(config: ShortcutsConfig, options: ShortcutsOptio
     }
 
     // Create shortcut computed
-    const conditions: ComputedRef<boolean>[] = []
-    if (!(shortcutConfig as ShortcutConfig).usingInput) {
+    const conditions = []
+    if (!shortcutConfig.usingInput) {
       conditions.push(logicNot(usingInput))
     }
-    else if (typeof (shortcutConfig as ShortcutConfig).usingInput === 'string') {
-      conditions.push(computed(() => usingInput.value === (shortcutConfig as ShortcutConfig).usingInput))
+    else if (typeof shortcutConfig.usingInput === 'string') {
+      conditions.push(computed(() => usingInput.value === shortcutConfig.usingInput))
     }
-    shortcut.condition = logicAnd(...conditions, ...((shortcutConfig as ShortcutConfig).whenever || []))
+    shortcut.condition = logicAnd(...conditions, ...(shortcutConfig.whenever || []))
 
-    return shortcut as Shortcut
-  }).filter(Boolean) as Shortcut[]
+    return shortcut
+  }).filter(Boolean)
 
   useEventListener('keydown', onKeyDown)
 }

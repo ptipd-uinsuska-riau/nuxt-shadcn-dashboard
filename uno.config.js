@@ -16,7 +16,7 @@ export default defineConfig({
     {
       // nth-[]:class
       name: ':nth-child()',
-      match: (matcher: string) => {
+      match: (matcher) => {
         const match = matcher.match(/^nth-\[(.+?):/)
         if (!match)
           return matcher

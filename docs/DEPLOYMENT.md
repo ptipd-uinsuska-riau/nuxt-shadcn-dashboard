@@ -1,6 +1,6 @@
 # 🚀 Deployment Guide
 
-Panduan lengkap untuk deploy aplikasi Nuxt ShadCN Starter Template ke berbagai platform.
+Panduan lengkap untuk deploy aplikasi Nuxt ShadCN Starter Template (JavaScript + Yarn) ke berbagai platform.
 
 ## 📋 Persiapan Deployment
 
@@ -22,20 +22,20 @@ Test build lokal sebelum deploy:
 
 ```bash
 # Build untuk production
-npm run build
+yarn build
 
 # Test preview
-npm run preview
+yarn preview
 ```
 
 ### 3. Optimasi
 
 ```bash
 # Audit dependencies
-npm audit
+yarn audit
 
 # Check bundle size
-npm run build -- --analyze
+yarn build --analyze
 ```
 
 ## 🌐 Platform Deployment
@@ -46,7 +46,7 @@ npm run build -- --analyze
 
 ```bash
 # Install Vercel CLI
-npm i -g vercel
+yarn global add vercel
 
 # Login ke Vercel
 vercel login
@@ -201,13 +201,13 @@ spec:
         app: nuxt-app
     spec:
       containers:
-      - name: nuxt-app
-        image: yourusername/nuxt-shadcn-app:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - name: nuxt-app
+          image: yourusername/nuxt-shadcn-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 ---
 apiVersion: v1
 kind: Service
@@ -217,8 +217,8 @@ spec:
   selector:
     app: nuxt-app
   ports:
-  - port: 80
-    targetPort: 3000
+    - port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
 
@@ -383,6 +383,7 @@ export default defineNuxtConfig({
 ### Common Issues
 
 1. **Build Failures**
+
    ```bash
    # Clear cache
    npm run clean
@@ -391,6 +392,7 @@ export default defineNuxtConfig({
    ```
 
 2. **Environment Variables**
+
    ```bash
    # Check if variables are loaded
    console.log(process.env.NODE_ENV)

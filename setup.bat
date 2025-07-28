@@ -24,16 +24,21 @@ if errorlevel 1 (
     echo [SUCCESS] Node.js found: !NODE_VERSION!
 )
 
-REM Detect package manager
-echo [INFO] Detecting package manager...
-if exist "yarn.lock" (
-    set PACKAGE_MANAGER=yarn
-) else if exist "pnpm-lock.yaml" (
-    set PACKAGE_MANAGER=pnpm
-) else if exist "package-lock.json" (
-    set PACKAGE_MANAGER=npm
-) else (
-    set PACKAGE_MANAGER=npm
+REM Use Yarn as the preferred package manager
+echo [INFO] Using Yarn as package manager...
+set PACKAGE_MANAGER=yarn
+
+REM Check if Yarn is installed
+yarn --version >nul 2>&1
+if errorlevel 1 (
+    echo [WARNING] Yarn is not installed. Installing Yarn...
+    npm install -g yarn
+    if errorlevel 1 (
+        echo [ERROR] Failed to install Yarn. Falling back to npm.
+        set PACKAGE_MANAGER=npm
+    ) else (
+        echo [SUCCESS] Yarn installed successfully!
+    )
 )
 
 echo [SUCCESS] Using package manager: !PACKAGE_MANAGER!
@@ -41,21 +46,7 @@ echo [SUCCESS] Using package manager: !PACKAGE_MANAGER!
 REM Install dependencies
 echo [INFO] Installing dependencies...
 if "!PACKAGE_MANAGER!"=="yarn" (
-    yarn --version >nul 2>&1
-    if errorlevel 1 (
-        echo [ERROR] Yarn is not installed. Installing with npm instead...
-        npm install
-    ) else (
-        yarn install
-    )
-) else if "!PACKAGE_MANAGER!"=="pnpm" (
-    pnpm --version >nul 2>&1
-    if errorlevel 1 (
-        echo [ERROR] PNPM is not installed. Installing with npm instead...
-        npm install
-    ) else (
-        pnpm install
-    )
+    yarn install
 ) else (
     npm install
 )
@@ -96,15 +87,17 @@ echo.
 
 echo Next steps:
 echo 1. Edit .env file with your configuration
-echo 2. Run 'npm run dev' (or 'yarn dev'/'pnpm dev') to start development server
+echo 2. Run 'yarn dev' to start development server
 echo 3. Open http://localhost:3000 in your browser
 echo.
 echo Available commands:
-echo   npm run dev      - Start development server
-echo   npm run build    - Build for production
-echo   npm run preview  - Preview production build
-echo   npm run lint     - Run ESLint
-echo   npm run format   - Format code with ESLint
+echo   yarn dev         - Start development server
+echo   yarn build       - Build for production
+echo   yarn preview     - Preview production build
+echo   yarn lint        - Run ESLint
+echo   yarn format      - Format code with ESLint
+echo   yarn clean       - Clean build artifacts
+echo   yarn update-deps - Update dependencies
 echo.
 echo Happy coding! 🎉
 echo.

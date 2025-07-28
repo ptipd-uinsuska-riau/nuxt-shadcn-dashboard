@@ -13,7 +13,7 @@ export function _useShortcuts() {
     const usingInput = (tagName === 'INPUT' || tagName === 'TEXTAREA' || contentEditable === 'true' || contentEditable === 'plaintext-only')
 
     if (usingInput) {
-      return ((activeElement.value as any)?.name as string) || true
+      return activeElement.value?.name || true
     }
 
     return false

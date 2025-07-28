@@ -2,17 +2,19 @@
 
 [![Nuxt](https://img.shields.io/badge/Built%20With%20Nuxt-18181B?logo=nuxt.js)](https://nuxt.com/)
 [![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Yarn](https://img.shields.io/badge/Yarn-2C8EBB?logo=yarn&logoColor=white)](https://yarnpkg.com/)
 [![UnoCSS](https://img.shields.io/badge/UnoCSS-333333?logo=unocss&logoColor=white)](https://unocss.dev/)
 [![ShadCN](https://img.shields.io/badge/ShadCN-000000?logo=shadcnui&logoColor=white)](https://ui.shadcn.com/)
 
-> **Template starter modern untuk membangun dashboard dan aplikasi web dengan Nuxt 3, ShadCN Vue, dan UnoCSS**
+> **Template starter modern untuk membangun dashboard dan aplikasi web dengan Nuxt 3, ShadCN Vue, UnoCSS, dan JavaScript**
 
 ## ✨ Fitur Utama
 
 - 🎨 **UI Modern** - Komponen ShadCN Vue yang elegan dan responsif
 - ⚡ **Performa Tinggi** - Dibangun dengan Nuxt 3 dan UnoCSS untuk performa optimal
-- 🎯 **TypeScript** - Type safety dan developer experience yang lebih baik
+- 🟨 **JavaScript** - Modern JavaScript dengan ES6+ features
+- 📦 **Yarn Package Manager** - Dependency management yang cepat dan reliable
 - 🌙 **Dark Mode** - Dukungan tema gelap/terang otomatis
 - 📱 **Responsive** - Desain yang sempurna di semua perangkat
 - 🔧 **Developer Friendly** - ESLint, Prettier, dan tools development terbaik
@@ -26,12 +28,12 @@
 - **Icons**: [Lucide Icons](https://lucide.dev/)
 - **State Management**: [Pinia](https://pinia.vuejs.org/)
 - **Form Validation**: [VeeValidate](https://vee-validate.logaretm.com/v4/) + [Zod](https://zod.dev/)
-- **TypeScript**: Full type safety
+- **JavaScript**: Modern ES6+ dengan JSDoc untuk dokumentasi
 
 ## 📋 Persyaratan Sistem
 
 - **Node.js** 18.0.0 atau lebih tinggi
-- **Package Manager**: npm, yarn, atau pnpm
+- **Yarn** 1.22.0 atau lebih tinggi (recommended package manager)
 
 ## 🚀 Quick Start
 
@@ -43,11 +45,11 @@ npx degit yourusername/nuxt-shadcn-starter-template my-awesome-app
 cd my-awesome-app
 
 # Jalankan setup otomatis
-npm run setup
-# atau untuk Windows: npm run setup:win
+yarn setup
+# atau untuk Windows: yarn setup:win
 
 # Mulai development server
-npm run dev
+yarn dev
 ```
 
 ### Metode 2: Clone Repository
@@ -58,13 +60,13 @@ git clone https://github.com/yourusername/nuxt-shadcn-starter-template.git
 cd nuxt-shadcn-starter-template
 
 # Install dependencies
-npm install
+yarn install
 
 # Copy environment file
 cp .env.example .env
 
 # Mulai development server
-npm run dev
+yarn dev
 ```
 
 Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
@@ -82,21 +84,24 @@ nuxt-shadcn-starter-template/
 ├── pages/               # Halaman aplikasi
 ├── public/              # Asset statis
 ├── server/              # Server-side code
-├── types/               # Type definitions
+├── lib/                 # Utility functions dan helpers
 ├── .env.example         # Template environment variables
-├── nuxt.config.ts       # Konfigurasi Nuxt
-├── uno.config.ts        # Konfigurasi UnoCSS
+├── nuxt.config.js       # Konfigurasi Nuxt
+├── uno.config.js        # Konfigurasi UnoCSS
+├── jsconfig.json        # JavaScript configuration
 └── package.json
 ```
 
 ## 🔧 Konfigurasi Environment
 
 1. Copy file `.env.example` ke `.env`:
+
    ```bash
    cp .env.example .env
    ```
 
 2. Edit file `.env` sesuai kebutuhan:
+
    ```env
    # Application settings
    NUXT_PUBLIC_APP_NAME="My Awesome App"
@@ -113,19 +118,23 @@ nuxt-shadcn-starter-template/
 
 ```bash
 # Development
-npm run dev          # Mulai development server
-npm run build        # Build untuk production
-npm run preview      # Preview production build
-npm run generate     # Generate static site
+yarn dev             # Mulai development server
+yarn build           # Build untuk production
+yarn preview         # Preview production build
+yarn generate        # Generate static site
 
 # Code Quality
-npm run lint         # Jalankan ESLint
-npm run format       # Format code dengan ESLint
-npm run typecheck    # Type checking dengan TypeScript
+yarn lint            # Jalankan ESLint
+yarn format          # Format code dengan ESLint
 
 # Setup
-npm run setup        # Setup otomatis (Linux/Mac)
-npm run setup:win    # Setup otomatis (Windows)
+yarn setup           # Setup otomatis (Linux/Mac)
+yarn setup:win       # Setup otomatis (Windows)
+
+# Maintenance
+yarn clean           # Bersihkan build artifacts
+yarn clean:all       # Bersihkan semua termasuk node_modules
+yarn update-deps     # Update dependencies
 ```
 
 ## 🎨 Kustomisasi
@@ -141,20 +150,20 @@ npx shadcn-vue@latest add dialog
 
 ### Mengubah Tema
 
-Edit file `uno.config.ts` untuk mengubah tema:
+Edit file `uno.config.js` untuk mengubah tema:
 
-```typescript
+```javascript
 export default defineConfig({
   theme: {
     colors: {
       primary: {
-        50: '#eff6ff',
-        500: '#3b82f6',
-        900: '#1e3a8a',
-      }
-    }
-  }
-})
+        50: "#eff6ff",
+        500: "#3b82f6",
+        900: "#1e3a8a",
+      },
+    },
+  },
+});
 ```
 
 ## 📤 Tutorial Upload ke GitHub
@@ -200,7 +209,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   deploy:
@@ -211,14 +220,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Build
-        run: npm run generate
+        run: yarn generate
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -234,9 +243,10 @@ jobs:
 ### Vercel (Recommended)
 
 1. **Connect ke Vercel**:
+
    ```bash
    # Install Vercel CLI
-   npm i -g vercel
+   yarn global add vercel
 
    # Deploy
    vercel
@@ -250,12 +260,13 @@ jobs:
 ### Netlify
 
 1. **Deploy via Netlify CLI**:
+
    ```bash
    # Install Netlify CLI
-   npm install -g netlify-cli
+   yarn global add netlify-cli
 
    # Build project
-   npm run generate
+   yarn generate
 
    # Deploy
    netlify deploy --prod --dir=dist
@@ -272,10 +283,10 @@ jobs:
 FROM node:18-alpine
 
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production && npm cache clean --force
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile --production && yarn cache clean
 COPY . .
-RUN npm run build
+RUN yarn build
 
 EXPOSE 3000
 CMD ["npm", "run", "preview"]
@@ -300,6 +311,7 @@ Kontribusi sangat diterima! Silakan:
 ## 📝 Changelog
 
 ### v1.0.0
+
 - ✨ Initial release
 - 🎨 ShadCN Vue components
 - ⚡ UnoCSS integration
@@ -309,24 +321,27 @@ Kontribusi sangat diterima! Silakan:
 ## 🐛 Troubleshooting
 
 ### Error: "Cannot resolve dependency"
+
 ```bash
 # Hapus node_modules dan install ulang
-rm -rf node_modules package-lock.json
-npm install
+rm -rf node_modules yarn.lock
+yarn install
 ```
 
 ### Error: "Port 3000 already in use"
+
 ```bash
 # Gunakan port lain
-npm run dev -- --port 3001
+yarn dev --port 3001
 ```
 
 ### Build error di production
+
 ```bash
 # Pastikan semua dependencies terinstall
-npm ci
-npm run typecheck
-npm run build
+yarn install --frozen-lockfile
+yarn lint
+yarn build
 ```
 
 ## 📚 Resources
@@ -335,7 +350,8 @@ npm run build
 - [ShadCN Vue Documentation](https://shadcn-vue.com/)
 - [UnoCSS Documentation](https://unocss.dev/)
 - [Vue 3 Documentation](https://vuejs.org/)
-- [TypeScript Documentation](https://www.typescriptlang.org/)
+- [JavaScript Documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [Yarn Documentation](https://yarnpkg.com/)
 
 ## 📄 License
 
@@ -344,6 +360,7 @@ MIT License - lihat file [LICENSE](LICENSE) untuk detail.
 ## 🙏 Credits
 
 Template ini dibuat berdasarkan:
+
 - [Nuxt 3](https://nuxt.com/) - The Intuitive Vue Framework
 - [ShadCN Vue](https://shadcn-vue.com/) - Beautiful UI components
 - [UnoCSS](https://unocss.dev/) - Instant On-demand Atomic CSS

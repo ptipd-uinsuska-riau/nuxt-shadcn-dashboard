@@ -1,15 +1,9 @@
-import type { Theme } from '@/lib/registry/themes'
 import { themes } from '@/lib/registry/themes'
-
-interface Config {
-  theme?: Theme['name']
-  radius: number
-}
 
 export function useCustomize() {
   const { value: color } = useColorMode()
   const isDark = color === 'dark'
-  const config = useCookie<Config>('config', {
+  const config = useCookie('config', {
     default: () => ({
       theme: 'zinc',
       radius: 0.5,
@@ -21,11 +15,11 @@ export function useCustomize() {
   const theme = computed(() => config.value.theme)
   const radius = computed(() => config.value.radius)
 
-  function setTheme(themeName: Theme['name']) {
+  function setTheme(themeName) {
     config.value.theme = themeName
   }
 
-  function setRadius(newRadius: number) {
+  function setRadius(newRadius) {
     config.value.radius = newRadius
   }
 

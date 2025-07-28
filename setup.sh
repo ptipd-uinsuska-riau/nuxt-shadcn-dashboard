@@ -48,7 +48,7 @@ print_status "Checking Node.js version..."
 if command_exists node; then
     NODE_VERSION=$(node --version)
     print_success "Node.js found: $NODE_VERSION"
-    
+
     # Check if Node.js version is 18 or higher
     NODE_MAJOR_VERSION=$(echo $NODE_VERSION | cut -d'.' -f1 | sed 's/v//')
     if [ "$NODE_MAJOR_VERSION" -lt 18 ]; then
@@ -59,17 +59,20 @@ else
     exit 1
 fi
 
-# Detect package manager
-print_status "Detecting package manager..."
-if [ -f "yarn.lock" ]; then
-    PACKAGE_MANAGER="yarn"
-elif [ -f "pnpm-lock.yaml" ]; then
-    PACKAGE_MANAGER="pnpm"
-elif [ -f "package-lock.json" ]; then
-    PACKAGE_MANAGER="npm"
-else
-    # Default to npm if no lock file exists
-    PACKAGE_MANAGER="npm"
+# Use Yarn as the preferred package manager
+print_status "Using Yarn as package manager..."
+PACKAGE_MANAGER="yarn"
+
+# Check if Yarn is installed
+if ! command_exists yarn; then
+    print_warning "Yarn is not installed. Installing Yarn..."
+    npm install -g yarn
+    if [ $? -eq 0 ]; then
+        print_success "Yarn installed successfully!"
+    else
+        print_error "Failed to install Yarn. Falling back to npm."
+        PACKAGE_MANAGER="npm"
+    fi
 fi
 
 print_success "Using package manager: $PACKAGE_MANAGER"
@@ -78,20 +81,7 @@ print_success "Using package manager: $PACKAGE_MANAGER"
 print_status "Installing dependencies..."
 case $PACKAGE_MANAGER in
     "yarn")
-        if command_exists yarn; then
-            yarn install
-        else
-            print_error "Yarn is not installed. Installing with npm instead..."
-            npm install
-        fi
-        ;;
-    "pnpm")
-        if command_exists pnpm; then
-            pnpm install
-        else
-            print_error "PNPM is not installed. Installing with npm instead..."
-            npm install
-        fi
+        yarn install
         ;;
     *)
         npm install
@@ -130,14 +120,16 @@ echo -e "${NC}"
 
 echo "Next steps:"
 echo "1. Edit .env file with your configuration"
-echo "2. Run 'npm run dev' (or 'yarn dev'/'pnpm dev') to start development server"
+echo "2. Run 'yarn dev' to start development server"
 echo "3. Open http://localhost:3000 in your browser"
 echo ""
 echo "Available commands:"
-echo "  npm run dev      - Start development server"
-echo "  npm run build    - Build for production"
-echo "  npm run preview  - Preview production build"
-echo "  npm run lint     - Run ESLint"
-echo "  npm run format   - Format code with ESLint"
+echo "  yarn dev         - Start development server"
+echo "  yarn build       - Build for production"
+echo "  yarn preview     - Preview production build"
+echo "  yarn lint        - Run ESLint"
+echo "  yarn format      - Format code with ESLint"
+echo "  yarn clean       - Clean build artifacts"
+echo "  yarn update-deps - Update dependencies"
 echo ""
 echo "Happy coding! 🎉"
