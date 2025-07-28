@@ -1,24 +1,28 @@
 {
-  "name": "nuxt-shadcn-dashboard",
+  "name": "nuxt-shadcn-starter-template",
   "type": "module",
-  "version": "0.2.6",
-  "description": "Shadcn Dashboard built with Nuxt",
-  "author": "Dian Pratama <dianpratama2@gmail.com>",
+  "version": "1.0.0",
+  "description": "🚀 Starter template untuk dashboard modern dengan Nuxt 3, ShadCN Vue, dan UnoCSS",
+  "author": "Your Name <your.email@example.com>",
   "license": "MIT",
-  "homepage": "https://dashboard.dianprata.com/",
+  "homepage": "https://github.com/yourusername/nuxt-shadcn-starter-template",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dianprata/nuxt-shadcn-dashboard.git"
+    "url": "git+https://github.com/yourusername/nuxt-shadcn-starter-template.git"
   },
   "keywords": [
+    "nuxt3",
+    "vue3",
+    "starter-template",
     "dashboard",
     "admin-dashboard",
-    "vue",
-    "nuxt",
     "shadcn-vue",
     "shadcn-nuxt",
-    "shadcn-dashboard",
-    "unocss"
+    "unocss",
+    "typescript",
+    "tailwind",
+    "modern-ui",
+    "responsive"
   ],
   "main": "./nuxt.config.ts",
   "files": [
@@ -41,7 +45,19 @@
     "postinstall": "nuxt prepare",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
-    "format": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "format": "eslint --fix .",
+    "setup": "chmod +x setup.sh && ./setup.sh",
+    "setup:win": "setup.bat",
+    "clean": "chmod +x scripts/clean.sh && ./scripts/clean.sh",
+    "clean:win": "scripts\\clean.bat",
+    "clean:all": "chmod +x scripts/clean.sh && ./scripts/clean.sh --all",
+    "update-deps": "chmod +x scripts/update-deps.sh && ./scripts/update-deps.sh",
+    "update-deps:check": "chmod +x scripts/update-deps.sh && ./scripts/update-deps.sh --check",
+    "docker:build": "docker build -t nuxt-shadcn-app .",
+    "docker:run": "docker run -p 3000:3000 nuxt-shadcn-app",
+    "docker:dev": "docker-compose up app-dev",
+    "docker:prod": "docker-compose up app"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.30",

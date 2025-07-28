@@ -5,9 +5,44 @@ export const navMenu: NavMenu[] = [
     heading: 'General',
     items: [
       {
-        title: 'Home',
+        title: 'Dashboard',
         icon: 'i-lucide-home',
         link: '/',
+      },
+      {
+        title: 'Dosen',
+        icon: 'i-lucide-users-round',
+        link: '/dosen',
+      },
+      {
+        title: 'Matakuliah',
+        icon: 'i-lucide-notebook',
+        link: '/matkul',
+      },
+      {
+        title: 'Ruang',
+        icon: 'i-lucide-warehouse',
+        link: '/ruang',
+      },
+      {
+        title: 'Kelas Kuliah',
+        icon: 'i-lucide-school',
+        link: '/kelas',
+      },
+      {
+        title: 'Jadwal',
+        icon: 'i-lucide-calendar-check',
+        link: '/jadwal',
+      },
+      {
+        title: 'Setting',
+        icon: 'i-lucide-settings',
+        link: '/setting',
+      },
+      {
+        title: 'Home',
+        icon: 'i-lucide-home',
+        link: '/home',
       },
       {
         title: 'Email',

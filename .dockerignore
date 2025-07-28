@@ -1,28 +1,25 @@
-# Nuxt dev/build outputs
-.output
-.data
+# Dependencies
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build outputs
 .nuxt
+.output
 .nitro
-.cache
 dist
 .vercel
 
-# Node dependencies
-node_modules
-
-# Package manager files
-yarn.lock
-package-lock.json
-pnpm-lock.yaml
-.pnpm-store
+# Environment files
+.env
+.env.*
+!.env.example
 
 # Logs
 logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
 
 # Runtime data
 pids
@@ -64,20 +61,11 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-.env.*
-!.env.example
-
-# parcel-bundler cache (https://parceljs.logs/)
+# parcel-bundler cache
 .parcel-cache
 
 # Next.js build output
 .next
-
-# Nuxt.js build / generate output
-.nuxt
-dist
 
 # Gatsby files
 .cache/
@@ -92,8 +80,7 @@ tmp/
 temp/
 
 # Editor directories and files
-.vscode/*
-!.vscode/extensions.json
+.vscode
 .idea
 .DS_Store
 *.suo
@@ -101,19 +88,37 @@ temp/
 *.njsproj
 *.sln
 *.sw?
-.fleet
 
 # OS generated files
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# Backup files
-*.bak
-*.backup
-*.old
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Documentation
+README.md
+CONTRIBUTING.md
+CHANGELOG.md
+
+# CI/CD
+.github/
+
+# Package manager files
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
 
 # Test files
-test-results/
-playwright-report/
-playwright/.cache/
+test/
+tests/
+__tests__/
+*.test.*
+*.spec.*

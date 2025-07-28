@@ -1,0 +1,73 @@
+{
+  "recommendations": [
+    // Vue.js
+    "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin",
+    
+    // TypeScript
+    "ms-vscode.vscode-typescript-next",
+    
+    // ESLint & Prettier
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    
+    // Tailwind CSS & UnoCSS
+    "bradlc.vscode-tailwindcss",
+    "antfu.unocss",
+    
+    // Git
+    "eamodio.gitlens",
+    
+    // Auto imports
+    "steoates.autoimport-es6-ts",
+    
+    // Bracket pair colorizer
+    "CoenraadS.bracket-pair-colorizer-2",
+    
+    // Path intellisense
+    "christian-kohler.path-intellisense",
+    
+    // Auto rename tag
+    "formulahendry.auto-rename-tag",
+    
+    // Better comments
+    "aaron-bond.better-comments",
+    
+    // Color highlight
+    "naumovs.color-highlight",
+    
+    // DotENV
+    "mikestead.dotenv",
+    
+    // File icons
+    "vscode-icons-team.vscode-icons",
+    
+    // Markdown
+    "yzhang.markdown-all-in-one",
+    
+    // REST Client (for API testing)
+    "humao.rest-client",
+    
+    // Thunder Client (alternative to Postman)
+    "rangav.vscode-thunder-client",
+    
+    // Error lens
+    "usernamehw.errorlens",
+    
+    // Indent rainbow
+    "oderwat.indent-rainbow",
+    
+    // TODO Highlight
+    "wayou.vscode-todo-highlight",
+    
+    // GitLab Workflow (if using GitLab)
+    "gitlab.gitlab-workflow",
+    
+    // GitHub Pull Requests (if using GitHub)
+    "github.vscode-pull-request-github"
+  ],
+  "unwantedRecommendations": [
+    "octref.vetur",
+    "ms-vscode.vscode-json"
+  ]
+}
