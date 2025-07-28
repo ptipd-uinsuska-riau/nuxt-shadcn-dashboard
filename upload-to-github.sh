@@ -91,7 +91,7 @@ else
     echo "2. Repository kosong (tidak ada file README, .gitignore, dll)"
     echo "3. Anda memiliki akses write ke repository"
     echo "4. Git credentials sudah dikonfigurasi"
-    
+
     # Remove the remote if push failed
     git remote remove origin
     exit 1
@@ -112,4 +112,4 @@ echo "2. Buka Settings > General"
 echo "3. Centang 'Template repository' untuk menjadikannya template"
 echo "4. Setup GitHub Pages jika diperlukan"
 echo ""
-echo "Template siap digunakan! 🎉"
+echo "Template JavaScript + Yarn siap digunakan! 🎉"

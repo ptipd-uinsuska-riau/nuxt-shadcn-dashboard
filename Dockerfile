@@ -8,10 +8,12 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Copy package files
-COPY package.json package-lock.json* ./
+COPY package.json yarn.lock* ./
 
-# Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+# Install Yarn and dependencies
+RUN npm install -g yarn && \
+    yarn install --frozen-lockfile --production && \
+    yarn cache clean
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -20,7 +22,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN yarn build
 
 # Production image, copy all the files and run nuxt
 FROM base AS runner

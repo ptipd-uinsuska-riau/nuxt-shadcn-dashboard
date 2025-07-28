@@ -41,16 +41,20 @@ echo "📦 DEPENDENCY UPDATE SCRIPT"
 echo "=================================================="
 echo -e "${NC}"
 
-# Detect package manager
-print_status "Detecting package manager..."
-if [ -f "yarn.lock" ]; then
-    PACKAGE_MANAGER="yarn"
-elif [ -f "pnpm-lock.yaml" ]; then
-    PACKAGE_MANAGER="pnpm"
-elif [ -f "package-lock.json" ]; then
-    PACKAGE_MANAGER="npm"
-else
-    PACKAGE_MANAGER="npm"
+# Use Yarn as preferred package manager
+print_status "Using Yarn as package manager..."
+PACKAGE_MANAGER="yarn"
+
+# Check if Yarn is installed
+if ! command_exists yarn; then
+    print_warning "Yarn is not installed. Installing Yarn..."
+    npm install -g yarn
+    if [ $? -eq 0 ]; then
+        print_success "Yarn installed successfully!"
+    else
+        print_error "Failed to install Yarn. Falling back to npm."
+        PACKAGE_MANAGER="npm"
+    fi
 fi
 
 print_success "Using package manager: $PACKAGE_MANAGER"
@@ -64,22 +68,8 @@ print_success "Backup created: package.json.backup"
 update_dependencies() {
     case $PACKAGE_MANAGER in
         "yarn")
-            if command_exists yarn; then
-                print_status "Updating dependencies with Yarn..."
-                yarn upgrade-interactive
-            else
-                print_error "Yarn not found, falling back to npm"
-                npm update
-            fi
-            ;;
-        "pnpm")
-            if command_exists pnpm; then
-                print_status "Updating dependencies with PNPM..."
-                pnpm update -i
-            else
-                print_error "PNPM not found, falling back to npm"
-                npm update
-            fi
+            print_status "Updating dependencies with Yarn..."
+            yarn upgrade-interactive
             ;;
         *)
             print_status "Updating dependencies with NPM..."
@@ -93,14 +83,7 @@ check_outdated() {
     print_status "Checking for outdated packages..."
     case $PACKAGE_MANAGER in
         "yarn")
-            if command_exists yarn; then
-                yarn outdated || true
-            fi
-            ;;
-        "pnpm")
-            if command_exists pnpm; then
-                pnpm outdated || true
-            fi
+            yarn outdated || true
             ;;
         *)
             npm outdated || true
@@ -113,14 +96,7 @@ audit_dependencies() {
     print_status "Running security audit..."
     case $PACKAGE_MANAGER in
         "yarn")
-            if command_exists yarn; then
-                yarn audit || true
-            fi
-            ;;
-        "pnpm")
-            if command_exists pnpm; then
-                pnpm audit || true
-            fi
+            yarn audit || true
             ;;
         *)
             npm audit || true
@@ -147,7 +123,7 @@ fi
 # Test build after updates
 if [ "$1" = "--interactive" ] || [ "$1" = "-i" ]; then
     print_status "Testing build after updates..."
-    if npm run build; then
+    if yarn build; then
         print_success "Build successful after updates!"
     else
         print_error "Build failed after updates. Consider restoring backup."
